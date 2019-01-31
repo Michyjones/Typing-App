@@ -1,1 +1,1 @@
-# Typing-App
+# Typing-Application
