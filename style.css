@@ -1,0 +1,7 @@
+body{
+    font-family: 'Hind', sans-serif;
+    background: url("images/land.jpg") no-repeat center center;
+    background-attachment: fixed;
+    background-size: cover;
+
+}
