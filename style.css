@@ -3,5 +3,54 @@ body{
     background: url("images/land.jpg") no-repeat center center;
     background-attachment: fixed;
     background-size: cover;
+    color: white;
 
+}
+.meas_container{
+    background-color: lightgreen
+}
+.typingIcon{
+    height: 50px;
+}
+#content{
+    height: 100px;
+    background-color: rgba(255,255, 255, 0.2);
+    margin: 10px auto;
+    overflow: hidden;
+}
+.change{
+    height: 25px;
+    font-size: 15px;
+}
+#input{
+    background-color: rgba(233, 221, 230, 0.3);
+    width: 100%;
+    font-size: 25px;
+    color: greenyellow;
+
+}
+.restart{
+margin-top: 10px;
+
+}
+.btn-primary{
+    background: rgba(8, 236, 19, 0.5)
+}
+.btn-primary:focus, .btn-primary:active, .btn-primary:hover{
+    background: rgba(126, 231, 6, 0.8)
+}
+.scoreDown, .scoreUp{
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+
+}
+.scoreDown{
+    background: red;
+}
+.scoreUp{
+    background: green
+}
+.modal{
+    color: black;
 }
