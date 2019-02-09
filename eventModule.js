@@ -12,8 +12,14 @@ var eventModule = (function(dModule, uModule, wModule, cModule){
             uModule.fillContent(testWords, returnLine);
             dModule.setTestTime(duration);
             dModule.IntialTimeLeft();
+            dModule.moveToNewWord();
             var timeLeft = dModule.getTimeleft();
             uModule.updateTimeLeft(timeLeft);
+            var index = dModule.getCurrentWordIndex();
+            uModule.setActiveWord(index);
+            var currentWord = dModule.getCurrentWord();
+            uModule.formatWord(currentWord);
+            uModule.inputFocus();
             addEventListeners();
         }
     };
