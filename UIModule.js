@@ -43,7 +43,9 @@ var UIModule = (function() {
     updateResults: function() {},
     fillModal: function() {},
     showModal: function() {},
-    inputFocus: function() {},
+    inputFocus: function() {
+      DOMElement.textInput.focus();
+    },
     isNameEmpty: function() {},
     flagNameInput: function() {},
     spacePressed: function() {},
@@ -65,8 +67,13 @@ var UIModule = (function() {
 
       DOMElement.content.innerHTML = content;
     },
-    formatWord: function(wordObject, wordHTML) {},
-    setActiveWord: function(index) {},
+    formatWord: function(wordObject) {
+      var activeWord = DOMElement.activeWord;
+      activeWord.className = 'activeWord';
+    },
+    setActiveWord: function(index) {
+      DOMElement.activeWord = DOMElement.content.children[index];
+    },
     deactivateCurrentWord: function() {},
     scroll: function() {}
   };
