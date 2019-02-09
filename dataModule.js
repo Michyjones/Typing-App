@@ -82,27 +82,38 @@ var dataModule = (function() {
       numOfTestCharaacters: 0
     },
     words: {
-      currentWordIndex: 0,
+      currentWordIndex: -1,
       testWords: [],
       currentWords: {}
     }
   };
 
-  var word = function(index) {};
+  var word = function(index) {
+    this.value = {
+      correct: appData.words.testWords[index] + ' ',
+      user: '',
+      isCorrect: false
+    };
+    this.characters = {
+      correct: this.value.correct.split(''),
+      user: [],
+      totalCorrect: 0,
+      totalTest: this.value.correct.length
+    };
+  };
 
   word.prototype.update = function(value) {};
   return {
     setTestTime: function(x) {
-        appData.indicators.totalTestTime = x;
+      appData.indicators.totalTestTime = x;
     },
     IntialTimeLeft: function() {
-        appData.indicators.timeLeft = appData.indicators.totalTestTime;
+      appData.indicators.timeLeft = appData.indicators.totalTestTime;
     },
     StartTime: function() {},
     endTime: function() {},
     getTimeleft: function() {
-        return appData.indicators.timeLeft;
-
+      return appData.indicators.timeLeft;
     },
     reducetime: function() {},
     timeLeft: function() {},
@@ -114,7 +125,7 @@ var dataModule = (function() {
 
     fillListOfTestWords: function(textNumber, words) {
       var result = words.split(' ');
-      if (textNumber == 0){
+      if (textNumber == 0) {
         result = shuffle(result);
         result = randomCapitalize(result);
         result = addRandomPunctuation(result);
@@ -124,10 +135,27 @@ var dataModule = (function() {
     getListOfTestWords: function() {
       return appData.words.testWords;
     },
-    moveToNewWord: function() {},
+    moveToNewWord: function() {
+      appData.words.currentWordIndex++;
+      var currentIndex = appData.words.currentWordIndex;
+      var newWord = new word(currentIndex);
+      appData.words.currentWords = newWord;
+    },
     updateCureentWord: function(value) {},
-    getReturnLine(){
-        return returnLine
+    getReturnLine() {
+      return returnLine;
+    },
+    getCurrentWordIndex() {
+      return appData.words.currentWordIndex;
+    },
+    getCurrentWord() {
+      var currentWord = appData.words.currentWords;
+      return {
+        value: {
+          correct: currentWord.value.correct,
+          user: currentWord.value.user
+        }
+      };
     },
     returnData() {
       console.log(appData);
