@@ -3,7 +3,7 @@ var UIModule = (function() {
     return string.split('');
   };
   var addSpace = function(array) {
-    array.push('');
+    array.push(' ');
     return array;
   };
   var addSpanTags = function(array) {
@@ -19,6 +19,14 @@ var UIModule = (function() {
 
   var joinWords = function(array) {
     return array.join('');
+  };
+  var userValue;
+  var returnCharacterCls = function(currentChar, index) {
+    return index < userValue.length
+      ? currentChar == userValue[index]
+        ? 'correctChar'
+        : 'wrongChar'
+      : '0';
   };
 
   var DOMElement = {
@@ -36,7 +44,11 @@ var UIModule = (function() {
     modal: $('#modal')
   };
   return {
-    getDOMElement: function() {},
+    getDOMElement: function() {
+      return {
+        textInput: DOMElement.textInput
+      };
+    },
     updateTimeLeft: function(x) {
       DOMElement.timeLeft.innerHTML = x;
     },
@@ -51,7 +63,9 @@ var UIModule = (function() {
     spacePressed: function() {},
     enterPressed: function() {},
     emptyInput: function() {},
-    getTypedWord: function() {},
+    getTypedWord: function() {
+      return DOMElement.textInput.value;
+    },
 
     fillContent: function(array, returnLine) {
       var content = array.map(splitArray);
@@ -70,6 +84,16 @@ var UIModule = (function() {
     formatWord: function(wordObject) {
       var activeWord = DOMElement.activeWord;
       activeWord.className = 'activeWord';
+      var correctValue = wordObject.value.correct;
+      userValue = wordObject.value.user;
+     
+      var classes = Array.prototype.map.call(correctValue, returnCharacterCls);
+      var activeWord = DOMElement.activeWord;
+      var characters = activeWord.children;
+      for (var i = 0; i < characters.length; i++) {
+        characters[i].removeAttribute('class');
+        characters[i].className = classes[i];
+      }
     },
     setActiveWord: function(index) {
       DOMElement.activeWord = DOMElement.content.children[index];
