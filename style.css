@@ -58,3 +58,9 @@ margin-top: 10px;
     background-color: greenyellow;
     border-radius: 5px;
 }
+.correctChar{
+    color: blue;
+}
+.wrongChar{
+    color: brown;
+}
