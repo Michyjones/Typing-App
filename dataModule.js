@@ -111,8 +111,8 @@ var dataModule = (function() {
     this.value.isCorrect = this.value.correct == this.value.user;
     this.characters.user = this.value.user.split('');
     correctcharacters = 0;
-   
-    callBack =callBack.bind(this);
+
+    callBack = callBack.bind(this);
     this.characters.correct.forEach(callBack);
     this.characters.totalCorrect = correctcharacters;
   };
@@ -123,18 +123,42 @@ var dataModule = (function() {
     IntialTimeLeft: function() {
       appData.indicators.timeLeft = appData.indicators.totalTestTime;
     },
-    StartTime: function() {},
+    StartTest: function() {
+      appData.indicators.testStarted = true;
+      
+    },
     endTime: function() {},
     getTimeleft: function() {
       return appData.indicators.timeLeft;
     },
-    reducetime: function() {},
-    timeLeft: function() {},
+    reduceTime: function() {
+      appData.indicators.timeLeft --;
+      return appData.indicators.timeLeft;
+
+    },
+    timeLeft: function() {
+      return appData.indicators.timeLeft != 0;
+    },
     testEnded: function() {
       return appData.indicators.testEnded;
     },
-    testStarted: function() {},
-    calculateWpm: function() {},
+    testStarted: function() {
+     
+      return appData.indicators.testStarted;
+    
+    },
+    calculateWpm: function() {
+      var wpmOld = appData.results.wpm;
+      var numOfCorrectWords = appData.results.numOfCorrectWords;
+      if (appData.indicators.timeLeft != appData.indicators.totalTestTime) {
+        appData.results.wpm = Math.round(60 * numOfCorrectWords/(appData.indicators.totalTestTime - appData.indicators.timeLeft)
+        );
+      } else {
+        appData.results.wpm = 0;
+      }
+      appData.results.wpmChange = appData.results.wpm - wpmOld;
+      return [appData.results.wpm, appData.results.wpmChange];
+    },
     calculateCpm: function() {},
     calculateAccurancy: function() {},
 
@@ -151,8 +175,12 @@ var dataModule = (function() {
       return appData.words.testWords;
     },
     moveToNewWord: function() {
-      if(appData.words.currentWordIndex > -1){
-
+      if(appData.words.currentWordIndex > -1) {
+        if(appData.words.currentWords.value.isCorrect == true) {
+          appData.results.numOfCorrectWords ++;
+        }
+        appData.results.numOfCorrectCharacters += appData.words.currentWords.characters.totalCorrect;
+        appData.results.numOfTestCharaacters +=  appData.words.currentWords.characters.totalTest;
       }
       appData.words.currentWordIndex ++;
       var currentIndex = appData.words.currentWordIndex;
