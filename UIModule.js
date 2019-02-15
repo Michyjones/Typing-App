@@ -60,11 +60,20 @@ var UIModule = (function() {
     },
     isNameEmpty: function() {},
     flagNameInput: function() {},
-    spacePressed: function() {},
-    enterPressed: function() {},
-    emptyInput: function() {},
+    spacePressed: function(event) {
+      return event.data == " ";
+      
+    },
+    enterPressed: function(returnLine) {
+      return DOMElement.textInput.value.includes(returnLine + ' ');
+
+
+    },
+    emptyInput: function() {
+      DOMElement.textInput.value = '';
+    },
     getTypedWord: function() {
-      return DOMElement.textInput.value;
+       return DOMElement.textInput.value;
     },
 
     fillContent: function(array, returnLine) {
@@ -77,7 +86,6 @@ var UIModule = (function() {
       content = content
         .split('<span>' + returnLine + '</span>')
         .join('<span>&crarr;</span>');
-      console.log(content);
 
       DOMElement.content.innerHTML = content;
     },
@@ -98,7 +106,15 @@ var UIModule = (function() {
     setActiveWord: function(index) {
       DOMElement.activeWord = DOMElement.content.children[index];
     },
-    deactivateCurrentWord: function() {},
-    scroll: function() {}
+    deactivateCurrentWord: function() {
+      DOMElement.activeWord.removeAttribute('class');
+    },
+    scroll: function() {
+      var activeWord = DOMElement.activeWord;
+      var top1 = DOMElement.activeWord.offsetTop;
+      var top2 = DOMElement.content.offsetTop;
+      var diff = top1 - top2;
+      DOMElement.content.scrollTop = diff - 40;
+    }
   };
 })();
