@@ -4,6 +4,7 @@ body{
     background-attachment: fixed;
     background-size: cover;
     color: white;
+   
 
 }
 .meas_container{
@@ -17,6 +18,8 @@ body{
     background-color: rgba(255,255, 255, 0.2);
     margin: 10px auto;
     overflow: hidden;
+    font-size: 22px;
+
 }
 .change{
     height: 25px;
