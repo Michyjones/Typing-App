@@ -26,6 +26,10 @@ var dataModule = (function() {
       return x == 3 ? currentWord.capitalize() : currentWord;
     });
   };
+  var correctcharacters;
+  var callBack = function(currentElement, index) {
+    correctcharacters += currentElement == this.characters.user[index] ? 1 : 0;
+  };
   var addRandomPunctuation = function(arrayOfStrings) {
     return arrayOfStrings.map(function(currentWord) {
       var randomPunctuation;
@@ -102,7 +106,16 @@ var dataModule = (function() {
     };
   };
 
-  word.prototype.update = function(value) {};
+  word.prototype.update = function(value) {
+    this.value.user = value;
+    this.value.isCorrect = this.value.correct == this.value.user;
+    this.characters.user = this.value.user.split('');
+    correctcharacters = 0;
+
+    callBack = callBack.bind(this);
+    this.characters.correct.forEach(callBack);
+    this.characters.totalCorrect = correctcharacters;
+  };
   return {
     setTestTime: function(x) {
       appData.indicators.totalTestTime = x;
@@ -110,16 +123,42 @@ var dataModule = (function() {
     IntialTimeLeft: function() {
       appData.indicators.timeLeft = appData.indicators.totalTestTime;
     },
-    StartTime: function() {},
+    StartTest: function() {
+      appData.indicators.testStarted = true;
+      
+    },
     endTime: function() {},
     getTimeleft: function() {
       return appData.indicators.timeLeft;
     },
-    reducetime: function() {},
-    timeLeft: function() {},
-    testEnded: function() {},
-    testStarted: function() {},
-    calculateWpm: function() {},
+    reduceTime: function() {
+      appData.indicators.timeLeft --;
+      return appData.indicators.timeLeft;
+
+    },
+    timeLeft: function() {
+      return appData.indicators.timeLeft != 0;
+    },
+    testEnded: function() {
+      return appData.indicators.testEnded;
+    },
+    testStarted: function() {
+     
+      return appData.indicators.testStarted;
+    
+    },
+    calculateWpm: function() {
+      var wpmOld = appData.results.wpm;
+      var numOfCorrectWords = appData.results.numOfCorrectWords;
+      if (appData.indicators.timeLeft != appData.indicators.totalTestTime) {
+        appData.results.wpm = Math.round(60 * numOfCorrectWords/(appData.indicators.totalTestTime - appData.indicators.timeLeft)
+        );
+      } else {
+        appData.results.wpm = 0;
+      }
+      appData.results.wpmChange = appData.results.wpm - wpmOld;
+      return [appData.results.wpm, appData.results.wpmChange];
+    },
     calculateCpm: function() {},
     calculateAccurancy: function() {},
 
@@ -136,12 +175,21 @@ var dataModule = (function() {
       return appData.words.testWords;
     },
     moveToNewWord: function() {
-      appData.words.currentWordIndex++;
+      if(appData.words.currentWordIndex > -1) {
+        if(appData.words.currentWords.value.isCorrect == true) {
+          appData.results.numOfCorrectWords ++;
+        }
+        appData.results.numOfCorrectCharacters += appData.words.currentWords.characters.totalCorrect;
+        appData.results.numOfTestCharaacters +=  appData.words.currentWords.characters.totalTest;
+      }
+      appData.words.currentWordIndex ++;
       var currentIndex = appData.words.currentWordIndex;
       var newWord = new word(currentIndex);
       appData.words.currentWords = newWord;
     },
-    updateCureentWord: function(value) {},
+    updateCureentWord: function(value) {
+      appData.words.currentWords.update(value);
+    },
     getReturnLine() {
       return returnLine;
     },
