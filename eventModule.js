@@ -44,6 +44,7 @@ var eventModule = (function(dModule, uModule, wModule, cModule) {
             var counter = setInterval(function() {
                 var results = {};
                 [results.wpm, results.wpmChange] = dModule.calculateWpm();
+                [results.cpm, results.cpmChange] = dModule.calculateCpm();
                 dModule.returnData();
           if (dModule.timeLeft()){
               var timeLeft = dModule.reduceTime();
