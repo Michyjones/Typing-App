@@ -42,16 +42,19 @@ var eventModule = (function(dModule, uModule, wModule, cModule) {
           if (!dModule.testStarted()) {
             dModule.StartTest();
             var counter = setInterval(function() {
-                var results = {};
-                [results.wpm, results.wpmChange] = dModule.calculateWpm();
-                [results.cpm, results.cpmChange] = dModule.calculateCpm();
-                dModule.returnData();
-          if (dModule.timeLeft()){
-              var timeLeft = dModule.reduceTime();
-              uModule.updateTimeLeft(timeLeft); 
-          }
+              var results = {};
+              [results.wpm, results.wpmChange] = dModule.calculateWpm();
+              [results.cpm, results.cpmChange] = dModule.calculateCpm();
+              [
+                results.accuracy,
+                results.accuracyChange
+              ] = dModule.calculateAccuracy();
+              dModule.returnData();
+              if (dModule.timeLeft()) {
+                var timeLeft = dModule.reduceTime();
+                uModule.updateTimeLeft(timeLeft);
+              }
             }, 1000);
-
           }
           var typedWord = uModule.getTypedWord();
           dModule.updateCureentWord(typedWord);
