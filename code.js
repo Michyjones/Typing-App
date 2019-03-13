@@ -1,3 +1,3 @@
 // $('#modal').modal('show')
-eventModule.init(60, 0);
+eventModule.init(30, 0);
 dataModule.returnData();

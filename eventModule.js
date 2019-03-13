@@ -49,7 +49,8 @@ var eventModule = (function(dModule, uModule, wModule, cModule) {
                 results.accuracy,
                 results.accuracyChange
               ] = dModule.calculateAccuracy();
-              dModule.returnData();
+              uModule.updateResults(results);
+
               if (dModule.timeLeft()) {
                 var timeLeft = dModule.reduceTime();
                 uModule.updateTimeLeft(timeLeft);
