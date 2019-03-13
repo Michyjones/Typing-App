@@ -28,6 +28,13 @@ var UIModule = (function() {
         : 'wrongChar'
       : '0';
   };
+  var updateChange = function(value, changeElement){
+    var classToAdd, html;
+    [classToAdd, html] = (value >= 0)? ['scoreUp', '+' + value]: ['scoreDown', '-' + value];
+    changeElement.innerHTML = html;
+    changeElement.removeAttribute('class');
+    changeElement.className = classToAdd;
+  };
 
   var DOMElement = {
     timeLeft: document.getElementById('timeLeft'),
@@ -35,8 +42,8 @@ var UIModule = (function() {
     wpmChange: document.getElementById('wpmChange'),
     cpm: document.getElementById('cpm'),
     cpmChange: document.getElementById('cpmChange'),
-    accurancy: document.getElementById('acc'),
-    accurancyChange: document.getElementById('accChange'),
+    accuracy: document.getElementById('acc'),
+    accuracyChange: document.getElementById('accChange'),
     textInput: document.querySelector('#input'),
     nameInput: document.querySelector('.form-group'),
     content: document.getElementById('content'),
@@ -52,7 +59,14 @@ var UIModule = (function() {
     updateTimeLeft: function(x) {
       DOMElement.timeLeft.innerHTML = x;
     },
-    updateResults: function() {},
+    updateResults: function(results) {
+      DOMElement.wpm.innerHTML = results.wpm;
+      DOMElement.cpm.innerHTML = results.cpm;
+      DOMElement.accuracy.innerHTML = results.accuracy + '%';
+      updateChange(results.wpm, DOMElement.wpmChange);
+      updateChange(results.cpm, DOMElement.cpmChange);
+      updateChange(results.accuracyChange, DOMElement.accuracyChange);
+    },
     fillModal: function() {},
     showModal: function() {},
     inputFocus: function() {

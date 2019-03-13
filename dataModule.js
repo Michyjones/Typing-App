@@ -131,7 +131,7 @@ var dataModule = (function() {
       return appData.indicators.timeLeft;
     },
     reduceTime: function() {
-      appData.indicators.timeLeft--;
+      appData.indicators.timeLeft --;
       return appData.indicators.timeLeft;
     },
     timeLeft: function() {
@@ -147,8 +147,7 @@ var dataModule = (function() {
       var wpmOld = appData.results.wpm;
       var numOfCorrectWords = appData.results.numOfCorrectWords;
       if (appData.indicators.timeLeft != appData.indicators.totalTestTime) {
-        appData.results.wpm = Math.round(
-          (60 * numOfCorrectWords) /
+        appData.results.wpm = Math.round(60 * numOfCorrectWords/
             (appData.indicators.totalTestTime - appData.indicators.timeLeft)
         );
       } else {
@@ -161,8 +160,7 @@ var dataModule = (function() {
       var cpmOld = appData.results.cpm;
       var numOfCorrectCharacters = appData.results.numOfCorrectCharacters;
       if (appData.indicators.timeLeft != appData.indicators.totalTestTime) {
-        appData.results.cpm = Math.round(
-          (60 * numOfCorrectCharacters) /
+        appData.results.cpm = Math.round(60 * numOfCorrectCharacters/
             (appData.indicators.totalTestTime - appData.indicators.timeLeft)
         );
       } else {
@@ -177,7 +175,7 @@ var dataModule = (function() {
       var numOfTestCharaacters = appData.results.numOfTestCharaacters;
       if (appData.indicators.timeLeft != appData.indicators.totalTestTime) {
         if (numOfTestCharaacters != 0) {
-          appData.results.accuracy = Math.round(100 * numOfCorrectCharacters/numOfTestCharaacters);
+          appData.results.accuracy = Math.round(100 * (numOfCorrectCharacters/numOfTestCharaacters));
         } else {
           appData.results.accuracy = 0
         }
@@ -209,7 +207,7 @@ var dataModule = (function() {
         appData.results.numOfTestCharaacters +=
           appData.words.currentWords.characters.totalTest;
       }
-      appData.words.currentWordIndex++;
+      appData.words.currentWordIndex ++;
       var currentIndex = appData.words.currentWordIndex;
       var newWord = new word(currentIndex);
       appData.words.currentWords = newWord;
